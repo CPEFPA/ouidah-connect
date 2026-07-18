@@ -170,14 +170,52 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(response => response.json())
             .then(result => {
                 if (result.status === 'success') {
-                    alert('✅ Succès ! Votre billet a été généré et envoyé par email.');
+                    // Création d'une fenêtre modale élégante (pas de pop-up bloqué)
+                    const modal = document.createElement('div');
+                    modal.style.cssText = `
+                        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+                        background: rgba(0,0,0,0.8); display: flex; justify-content: center;
+                        align-items: center; z-index: 9999;
+                    `;
                     
-                    // Proposer l'envoi WhatsApp
-                    if (result.whatsappLink && telVisiteur) {
-                        if (confirm('Voulez-vous ouvrir WhatsApp pour envoyer le lien du billet au visiteur ?')) {
-                            window.open(result.whatsappLink, '_blank');
-                        }
+                    const contenu = document.createElement('div');
+                    contenu.style.cssText = `
+                        background: white; padding: 30px; border-radius: 12px;
+                        max-width: 450px; text-align: center; font-family: 'Montserrat', sans-serif;
+                    `;
+                    
+                    let whatsappButtons = '';
+                    if (result.whatsappLink) {
+                        whatsappButtons = `
+                            <p style="margin: 15px 0; color: #333;">📱 <strong>Envoyer le billet par WhatsApp :</strong></p>
+                            <a href="${result.whatsappLink}" target="_blank" 
+                               style="display: inline-block; background: #25D366; color: white; padding: 12px 24px; 
+                               border-radius: 8px; text-decoration: none; font-weight: bold; margin-bottom: 10px;">
+                               Ouvrir WhatsApp
+                            </a>
+                            <br>
+                            <button onclick="navigator.clipboard.writeText('${result.whatsappLink}'); alert('✅ Lien copié dans le presse-papier !');"
+                                    style="background: #f0f0f0; color: #333; padding: 10px 20px; border: 1px solid #ccc; 
+                                    border-radius: 8px; cursor: pointer; font-size: 0.9rem;">
+                                📋 Copier le lien
+                            </button>
+                        `;
                     }
+
+                    contenu.innerHTML = `
+                        <h2 style="color: #2E7D32; margin-bottom: 15px;">✅ Réservation Réussie !</h2>
+                        <p style="margin-bottom: 20px; color: #555;">Votre billet a été généré. ${result.emailEnvoye ? 'Un email vous a été envoyé.' : 'Le quota email est atteint, utilisez WhatsApp.'}</p>
+                        ${whatsappButtons}
+                        <br><br>
+                        <button onclick="this.closest('div[style]').remove(); location.reload();" 
+                                style="background: #A0522D; color: white; padding: 10px 30px; border: none; 
+                                border-radius: 8px; cursor: pointer; font-weight: bold; margin-top: 10px;">
+                            Fermer
+                        </button>
+                    `;
+                    
+                    modal.appendChild(contenu);
+                    document.body.appendChild(modal);
                     
                     // Réinitialiser le formulaire
                     formBillet.reset();
