@@ -164,30 +164,29 @@ img {
 }
 
 /* ========================================== */
-/* HERO SECTION AVEC VIDÉO & OVERLAY BLANC    */
+/* HERO SECTION AVEC VIDÉO (GRAND FORMAT)     */
 /* ========================================== */
 .hero {
   position: relative;
   background: var(--couleur-blanc);
   overflow: hidden;
-  min-height: 80vh;
+  min-height: 85vh; /* Prend 85% de la hauteur de l'écran */
+  height: 85vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 60px 20px;
+  padding: 0 20px;
 }
 
 .hero-video {
   position: absolute;
   top: 50%;
   left: 50%;
-  min-width: 100%;
-  min-height: 100%;
-  width: auto;
-  height: auto;
+  width: 100%;
+  height: 100%;
   transform: translate(-50%, -50%);
   z-index: 0;
-  object-fit: cover;
+  object-fit: cover; /* Force la vidéo à couvrir tout l'espace sans déformation */
 }
 
 .hero-overlay {
@@ -196,7 +195,7 @@ img {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(255, 255, 255, 0.75); /* 75% blanc pour lisibilité maximale du logo/texte */
+  background: rgba(255, 255, 255, 0.75);
   z-index: 1;
 }
 
@@ -210,13 +209,13 @@ img {
 
 .hero-title {
   font-family: 'Playfair Display', serif;
-  font-size: 3rem;
+  font-size: 3.5rem; /* Titre un peu plus grand */
   margin-bottom: 15px;
   color: var(--couleur-terre);
 }
 
 .hero-subtitle {
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   margin-bottom: 30px;
   color: var(--couleur-texte);
 }
@@ -229,14 +228,20 @@ img {
 }
 
 /* ========================================== */
-/* PAGE HEADER (Pour les pages internes)      */
+/* PAGE HEADER AVEC VIDÉO (GRAND FORMAT)      */
 /* ========================================== */
 .page-header {
   position: relative;
   background: var(--couleur-terre);
   color: var(--couleur-blanc);
   text-align: center;
-  padding: 80px 20px;
+  min-height: 60vh; /* Prend 60% de la hauteur de l'écran sur les pages internes */
+  height: 60vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
   overflow: hidden;
 }
 
@@ -244,10 +249,8 @@ img {
   position: absolute;
   top: 50%;
   left: 50%;
-  min-width: 100%;
-  min-height: 100%;
-  width: auto;
-  height: auto;
+  width: 100%;
+  height: 100%;
   transform: translate(-50%, -50%);
   z-index: 0;
   object-fit: cover;
@@ -259,7 +262,7 @@ img {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(160, 82, 45, 0.8); /* Overlay marron pour les pages internes */
+  background: rgba(160, 82, 45, 0.75); /* Overlay marron pour lisibilité */
   z-index: 1;
 }
 
@@ -270,14 +273,14 @@ img {
 
 .page-header h1 {
   font-family: 'Playfair Display', serif;
-  font-size: 2.2rem;
-  margin-bottom: 10px;
+  font-size: 3rem;
+  margin-bottom: 15px;
   color: var(--couleur-blanc);
 }
 
 .page-header p {
   opacity: 0.95;
-  font-size: 1.1rem;
+  font-size: 1.3rem;
 }
 
 /* ========================================== */
