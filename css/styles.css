@@ -720,3 +720,37 @@ img {
   .home-grid { grid-template-columns: 1fr; }
   .home-card-image { height: 150px; }
 }
+
+/* ========================================== */
+/* BOUTONS DE PAIEMENT                        */
+/* ========================================== */
+.btn-paiement {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 15px;
+  background: white;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-align: left;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.btn-paiement:hover {
+  border-color: #A0522D;
+  background: #FFF8F0;
+  transform: translateX(5px);
+}
+
+.btn-paiement strong {
+  color: #A0522D;
+  font-size: 1rem;
+  margin-bottom: 3px;
+}
+
+.btn-paiement small {
+  color: #666;
+  font-size: 0.85rem;
+}

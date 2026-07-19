@@ -1,14 +1,12 @@
 /**
- * OUIDAH CONNECT - Script principal Frontend (Version Finale et Propre)
- * Gestion de l'interface utilisateur, calculs et interactions
+ * OUIDAH CONNECT - Script Frontend (Version avec choix de paiement)
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-    
     console.log('✅ OUIDAH CONNECT Frontend initialisé avec succès');
 
-        // ==========================================
-    // 1. GESTION DU MENU MOBILE (Version corrigée)
+    // ==========================================
+    // 1. GESTION DU MENU MOBILE
     // ==========================================
     const btnMenuMobile = document.getElementById('navToggle');
     const navMain = document.getElementById('navMenu');
@@ -16,47 +14,20 @@ document.addEventListener('DOMContentLoaded', () => {
     if (btnMenuMobile && navMain) {
         btnMenuMobile.addEventListener('click', () => {
             navMain.classList.toggle('active');
-            // Change l'icône hamburger en croix
             btnMenuMobile.textContent = navMain.classList.contains('active') ? '✕' : '☰';
         });
         
-        // Fermer le menu quand on clique sur un lien (sur mobile)
         const navLinks = navMain.querySelectorAll('.nav-link');
         navLinks.forEach(link => {
             link.addEventListener('click', () => {
                 navMain.classList.remove('active');
-                btnMenuMobile.textContent = '☰';
+                if (btnMenuMobile) btnMenuMobile.textContent = '☰';
             });
         });
     }
 
     // ==========================================
-    // 2. GESTION DU MODAL DE CONNEXION
-    // ==========================================
-    const btnConnexion = document.getElementById('btnConnexion');
-    const modalConnexion = document.getElementById('modalConnexion');
-    const modalClose = document.getElementById('modalClose');
-
-    if (btnConnexion && modalConnexion) {
-        btnConnexion.addEventListener('click', () => {
-            modalConnexion.classList.add('active');
-        });
-    }
-
-    if (modalClose && modalConnexion) {
-        modalClose.addEventListener('click', () => {
-            modalConnexion.classList.remove('active');
-        });
-    }
-
-    window.addEventListener('click', (e) => {
-        if (e.target === modalConnexion) {
-            modalConnexion.classList.remove('active');
-        }
-    });
-
-    // ==========================================
-    // 3. CALCULATEUR DE PRIX (BILLETTERIE)
+    // 2. CALCULATEUR DE PRIX
     // ==========================================
     const formBillet = document.getElementById('formBillet');
     const typeBillet = document.getElementById('typeBillet');
@@ -73,10 +44,8 @@ document.addEventListener('DOMContentLoaded', () => {
         'enfant': 1000,
         'etudiant': 1500,
         'groupe': 1500,
-        'scolaire': 500,
         'vip': 15000
     };
-
     const FRAIS_SERVICE = 200;
 
     function calculerPrix() {
@@ -105,26 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (guideOption) guideOption.addEventListener('change', calculerPrix);
 
     // ==========================================
-    // 4. DÉFILEMENT FLUIDE (SMOOTH SCROLL)
-    // ==========================================
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const targetId = this.getAttribute('href');
-            const targetElement = document.querySelector(targetId);
-            
-            if (targetElement) {
-                targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                if (navMain && navMain.classList.contains('active')) {
-                    navMain.classList.remove('active');
-                    if(btnMenuMobile) btnMenuMobile.textContent = '☰';
-                }
-            }
-        });
-    });
-
-    // ==========================================
-    // 5. ENVOI DU FORMULAIRE VERS GOOGLE APPS SCRIPT
+    // 3. ENVOI DU FORMULAIRE (AVEC CHOIX PAIEMENT)
     // ==========================================
     if (formBillet) {
         formBillet.addEventListener('submit', function(e) {
@@ -132,7 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
             const btnSubmit = formBillet.querySelector('button[type="submit"]');
             const originalText = btnSubmit.textContent;
-            btnSubmit.textContent = '🔄 Génération en cours...';
+            btnSubmit.textContent = '🔄 Préparation...';
             btnSubmit.disabled = true;
 
             const siteSelect = document.getElementById('siteChoisi');
@@ -144,100 +94,217 @@ document.addEventListener('DOMContentLoaded', () => {
             const typeVal = typeBillet ? typeBillet.value : 'Inconnu';
             const dateVisite = document.getElementById('dateVisite')?.value || '';
             const heure = document.getElementById('creneau')?.value || '';
+            const nomGuide = document.getElementById('nomGuide')?.value || 'Non assigné';
             
-            // Nettoyer le prix pour n'avoir que des chiffres
             let prixTotal = '0';
             if (prixTotalEl) {
-                prixTotal = prixTotalEl.textContent.replace(' FCFA', '').replace(/\s/g, '').replace('.', '');
+                prixTotal = prixTotalEl.textContent.replace(' FCFA', '').replace(/\s/g, '').replace(/\./g, '');
             }
+
+            const numBillet = 'OUD-' + Date.now().toString().slice(-6);
 
             const data = {
                 nomVisiteur: nomVisiteur,
                 email: emailVisiteur,
                 telephone: telVisiteur,
                 nomSite: nomSite,
-                numBillet: 'OUD-' + Date.now().toString().slice(-6),
+                numBillet: numBillet,
                 typeBillet: typeVal,
                 dateVisite: dateVisite,
                 heure: heure,
-                prix: prixTotal
+                prix: prixTotal,
+                nomGuide: nomGuide
             };
 
-            const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxi5Y2_6g-8R6nKp3WzwWkxZyatiT0_A8gC1P3593jFZfgWjJI3evTSGCqfHNX9loZ7/exec';
-
-            fetch(SCRIPT_URL, {
-                method: 'POST',
-                body: JSON.stringify(data)
-            })
-            .then(response => response.json())
-            .then(result => {
-                if (result.status === 'success') {
-                    // Création de la fenêtre modale élégante
-                    const modal = document.createElement('div');
-                    modal.style.cssText = `
-                        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-                        background: rgba(0,0,0,0.8); display: flex; justify-content: center;
-                        align-items: center; z-index: 9999;
-                    `;
-                    
-                    const contenu = document.createElement('div');
-                    contenu.style.cssText = `
-                        background: white; padding: 30px; border-radius: 12px;
-                        max-width: 450px; text-align: center; font-family: 'Montserrat', sans-serif;
-                    `;
-                    
-                    let whatsappButtons = '';
-                    if (result.whatsappLink) {
-                        whatsappButtons = `
-                            <p style="margin: 15px 0; color: #333;">📱 <strong>Envoyer le billet par WhatsApp :</strong></p>
-                            <a href="${result.whatsappLink}" target="_blank" 
-                               style="display: inline-block; background: #25D366; color: white; padding: 12px 24px; 
-                               border-radius: 8px; text-decoration: none; font-weight: bold; margin-bottom: 10px;">
-                               Ouvrir WhatsApp
-                            </a>
-                            <br>
-                            <button onclick="navigator.clipboard.writeText('${result.whatsappLink}'); alert('✅ Lien copié !');"
-                                    style="background: #f0f0f0; color: #333; padding: 10px 20px; border: 1px solid #ccc; 
-                                    border-radius: 8px; cursor: pointer; font-size: 0.9rem; margin-top: 5px;">
-                                📋 Copier le lien
-                            </button>
-                        `;
-                    }
-
-                    const emailMsg = result.emailEnvoye ? 'Un email vous a été envoyé.' : 'Quota email atteint, utilisez WhatsApp.';
-
-                    contenu.innerHTML = `
-                        <h2 style="color: #2E7D32; margin-bottom: 15px;">✅ Réservation Réussie !</h2>
-                        <p style="margin-bottom: 20px; color: #555;">Votre billet a été généré.<br>${emailMsg}</p>
-                        ${whatsappButtons}
-                        <br><br>
-                        <button onclick="this.closest('div[style]').remove(); location.reload();" 
-                                style="background: #A0522D; color: white; padding: 10px 30px; border: none; 
-                                border-radius: 8px; cursor: pointer; font-weight: bold; margin-top: 10px;">
-                            Fermer
-                        </button>
-                    `;
-                    
-                    modal.appendChild(contenu);
-                    document.body.appendChild(modal);
-                    
-                    // Réinitialiser le formulaire
-                    formBillet.reset();
-                    if(sousTotalEl) sousTotalEl.textContent = '0 FCFA';
-                    if(fraisServiceEl) fraisServiceEl.textContent = '0 FCFA';
-                    if(prixTotalEl) prixTotalEl.textContent = '0 FCFA';
-                } else {
-                    alert('❌ Erreur : ' + result.message);
-                }
-            })
-            .catch(error => {
-                console.error('Erreur:', error);
-                alert('❌ Une erreur de connexion est survenue. Vérifiez votre connexion internet.');
-            })
-            .finally(() => {
-                btnSubmit.textContent = originalText;
-                btnSubmit.disabled = false;
-            });
+            // Afficher l'écran de choix de paiement
+            afficherChoixPaiement(data);
+            
+            btnSubmit.textContent = originalText;
+            btnSubmit.disabled = false;
         });
+    }
+
+    // ==========================================
+    // 4. ÉCRAN DE CHOIX DE PAIEMENT
+    // ==========================================
+    function afficherChoixPaiement(data) {
+        const modal = document.createElement('div');
+        modal.id = 'modalPaiement';
+        modal.style.cssText = `
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85); display: flex; justify-content: center;
+            align-items: center; z-index: 9999; padding: 20px;
+        `;
+        
+        modal.innerHTML = `
+            <div style="background: white; padding: 30px; border-radius: 12px; max-width: 500px; width: 100%; max-height: 90vh; overflow-y: auto; font-family: 'Montserrat', sans-serif;">
+                <h2 style="color: #A0522D; margin-bottom: 10px; text-align: center;">💳 Choisissez votre mode de paiement</h2>
+                <p style="text-align: center; color: #666; margin-bottom: 20px;">
+                    Montant à payer : <strong style="color: #2E7D32; font-size: 1.3rem;">${parseInt(data.prix).toLocaleString('fr-FR')} FCFA</strong>
+                </p>
+                
+                <div style="display: grid; gap: 12px; margin-bottom: 20px;">
+                    <button onclick="choisirPaiement('MTN_MOMO', this)" class="btn-paiement" data-mode="MTN_MOMO">
+                        📱 <strong>MTN Mobile Money</strong>
+                        <small>Paiement instantané</small>
+                    </button>
+                    <button onclick="choisirPaiement('MOOV_MONEY', this)" class="btn-paiement" data-mode="MOOV_MONEY">
+                        📱 <strong>Moov Money</strong>
+                        <small>Paiement instantané</small>
+                    </button>
+                    <button onclick="choisirPaiement('CARTE Bancaire', this)" class="btn-paiement" data-mode="CARTE">
+                        💳 <strong>Carte Bancaire</strong>
+                        <small>Visa, Mastercard</small>
+                    </button>
+                    <button onclick="choisirPaiement('ESPECES_SUR_PLACE', this)" class="btn-paiement" data-mode="ESPECES">
+                        💵 <strong>Espèces sur place</strong>
+                        <small>Paiement à l'entrée du site</small>
+                    </button>
+                </div>
+                
+                <button onclick="document.getElementById('modalPaiement').remove()" style="width: 100%; padding: 10px; background: #f0f0f0; border: none; border-radius: 8px; cursor: pointer; color: #666;">
+                    Annuler
+                </button>
+            </div>
+        `;
+        
+        document.body.appendChild(modal);
+        
+        // Stocker les données globalement pour les utiliser après choix
+        window._dataBillet = data;
+    }
+
+    // Fonction globale appelée par les boutons
+    window.choisirPaiement = function(mode, btnElement) {
+        const data = window._dataBillet;
+        data.modePaiement = mode;
+        
+        // Désactiver tous les boutons
+        document.querySelectorAll('.btn-paiement').forEach(btn => {
+            btn.disabled = true;
+            btn.style.opacity = '0.5';
+        });
+        btnElement.style.opacity = '1';
+        btnElement.innerHTML = '✅ Traitement en cours...';
+        
+        // Envoyer au backend
+        envoyerAuBackend(data);
+    };
+
+    // ==========================================
+    // 5. ENVOI AU BACKEND GOOGLE
+    // ==========================================
+    function envoyerAuBackend(data) {
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxi5Y2_6g-8R6nKp3WzwWkxZyatiT0_A8gC1P3593jFZfgWjJI3evTSGCqfHNX9loZ7/exec';
+
+        fetch(SCRIPT_URL, {
+            method: 'POST',
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(result => {
+            document.getElementById('modalPaiement').remove();
+            
+            if (result.status === 'success') {
+                afficherConfirmation(data, result);
+            } else {
+                alert('❌ Erreur : ' + result.message);
+            }
+        })
+        .catch(error => {
+            console.error('Erreur:', error);
+            alert('❌ Erreur de connexion. Vérifiez votre internet.');
+        });
+    }
+
+    // ==========================================
+    // 6. CONFIRMATION SELON LE MODE DE PAIEMENT
+    // ==========================================
+    function afficherConfirmation(data, result) {
+        const modal = document.createElement('div');
+        modal.style.cssText = `
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85); display: flex; justify-content: center;
+            align-items: center; z-index: 9999; padding: 20px;
+        `;
+        
+        let instructionsPaiement = '';
+        
+        if (data.modePaiement === 'MTN_MOMO') {
+            instructionsPaiement = `
+                <div style="background: #FFCC00; padding: 15px; border-radius: 8px; margin: 15px 0;">
+                    <h4 style="margin: 0 0 10px; color: #000;">📱 Instructions MTN MoMo</h4>
+                    <ol style="text-align: left; margin: 0; padding-left: 20px; color: #000;">
+                        <li>Composez <strong>*133#</strong></li>
+                        <li>Choisissez "Transfert d'argent"</li>
+                        <li>Envoyez <strong>${parseInt(data.prix).toLocaleString('fr-FR')} FCFA</strong> au numéro :</li>
+                        <li style="font-size: 1.2rem; font-weight: bold;">+229 XX XX XX XX</li>
+                        <li>Référence : <strong>${data.numBillet}</strong></li>
+                    </ol>
+                </div>
+                <p style="color: #A0522D; font-weight: 600;">⏳ Votre billet sera activé après confirmation du paiement (sous 5 min).</p>
+            `;
+        } else if (data.modePaiement === 'MOOV_MONEY') {
+            instructionsPaiement = `
+                <div style="background: #0066CC; color: white; padding: 15px; border-radius: 8px; margin: 15px 0;">
+                    <h4 style="margin: 0 0 10px;">📱 Instructions Moov Money</h4>
+                    <ol style="text-align: left; margin: 0; padding-left: 20px;">
+                        <li>Composez <strong>*155#</strong></li>
+                        <li>Choisissez "Transfert"</li>
+                        <li>Envoyez <strong>${parseInt(data.prix).toLocaleString('fr-FR')} FCFA</strong> au numéro :</li>
+                        <li style="font-size: 1.2rem; font-weight: bold;">+229 XX XX XX XX</li>
+                        <li>Référence : <strong>${data.numBillet}</strong></li>
+                    </ol>
+                </div>
+                <p style="color: #A0522D; font-weight: 600;">⏳ Votre billet sera activé après confirmation du paiement.</p>
+            `;
+        } else if (data.modePaiement === 'CARTE') {
+            instructionsPaiement = `
+                <div style="background: #2E7D32; color: white; padding: 15px; border-radius: 8px; margin: 15px 0;">
+                    <h4 style="margin: 0 0 10px;">💳 Paiement par Carte</h4>
+                    <p>Le paiement sécurisé par carte sera disponible prochainement via notre partenaire FedaPay.</p>
+                    <p><strong>Merci de contacter le +229 XX XX XX XX</strong> pour finaliser votre réservation.</p>
+                </div>
+            `;
+        } else if (data.modePaiement === 'ESPECES_SUR_PLACE') {
+            instructionsPaiement = `
+                <div style="background: #A0522D; color: white; padding: 15px; border-radius: 8px; margin: 15px 0;">
+                    <h4 style="margin: 0 0 10px;">💵 Paiement sur place</h4>
+                    <p>Présentez ce billet à l'entrée du site et payez <strong>${parseInt(data.prix).toLocaleString('fr-FR')} FCFA</strong> en espèces.</p>
+                    <p style="margin-top: 10px;"><strong>⚠️ Important :</strong> Ce billet est valable 24h. Passé ce délai, il sera annulé automatiquement.</p>
+                </div>
+            `;
+        }
+        
+        let whatsappButtons = '';
+        if (result.whatsappLink) {
+            whatsappButtons = `
+                <p style="margin: 15px 0;">📱 <strong>Envoyez votre billet par WhatsApp :</strong></p>
+                <a href="${result.whatsappLink}" target="_blank" style="display: inline-block; background: #25D366; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: bold; margin-bottom: 10px;">
+                    Ouvrir WhatsApp
+                </a>
+            `;
+        }
+
+        modal.innerHTML = `
+            <div style="background: white; padding: 30px; border-radius: 12px; max-width: 500px; width: 100%; max-height: 90vh; overflow-y: auto; font-family: 'Montserrat', sans-serif; text-align: center;">
+                <h2 style="color: #2E7D32; margin-bottom: 15px;">✅ Réservation enregistrée !</h2>
+                <p style="margin-bottom: 15px;">Votre numéro de billet : <strong style="color: #A0522D; font-size: 1.2rem;">${data.numBillet}</strong></p>
+                
+                ${instructionsPaiement}
+                
+                ${whatsappButtons}
+                
+                <button onclick="this.closest('div[style]').remove(); location.reload();" style="background: #A0522D; color: white; padding: 12px 30px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; margin-top: 15px; width: 100%;">
+                    Fermer
+                </button>
+            </div>
+        `;
+        
+        document.body.appendChild(modal);
+        formBillet.reset();
+        if(sousTotalEl) sousTotalEl.textContent = '0 FCFA';
+        if(fraisServiceEl) fraisServiceEl.textContent = '0 FCFA';
+        if(prixTotalEl) prixTotalEl.textContent = '0 FCFA';
     }
 });
