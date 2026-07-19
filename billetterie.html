@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Billetterie - OUIDAH CONNECT</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="images/logo-ouidah.png" alt="Logo" class="nav-logo-img">
+                <span>OUIDAH CONNECT</span>
+            </a>
+            <button class="nav-toggle" id="navToggle">☰</button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link">Accueil</a></li>
+                <li><a href="sites.html" class="nav-link">Sites</a></li>
+                <li><a href="billetterie.html" class="nav-link active">Billetterie</a></li>
+                <li><a href="boutique.html" class="nav-link">Boutique</a></li>
+                <li><a href="contact.html" class="nav-link">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="page-header">
+        <video class="page-header-video" autoplay muted loop playsinline>
+            <source src="videos/hero-billetterie.mp4" type="video/mp4">
+        </video>
+        <div class="page-header-overlay"></div>
+        <h1>🎟️ Billetterie en Ligne</h1>
+        <p>Réservez votre visite en quelques clics</p>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="booking-container">
+                <form id="formBillet" class="booking-form">
+                    <h2>📝 Informations du Visiteur</h2>
+                    <div class="form-group">
+                        <label for="nomVisiteur">Nom complet *</label>
+                        <input type="text" id="nomVisiteur" required placeholder="Ex: Jean Koffi">
+                    </div>
+                    <div class="form-group">
+                        <label for="emailVisiteur">Email</label>
+                        <input type="email" id="emailVisiteur" placeholder="Ex: jean@email.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="telVisiteur">Téléphone *</label>
+                        <input type="tel" id="telVisiteur" required placeholder="Ex: 22997000000">
+                    </div>
+
+                    <h2>🏛️ Détails de la Visite</h2>
+                    <div class="form-group">
+                        <label for="siteChoisi">Site à visiter *</label>
+                        <select id="siteChoisi" required>
+                            <option value="">-- Choisir un site --</option>
+                            <option value="temple_pythons">Temple des Pythons</option>
+                            <option value="musee_histoire">Musée d'Histoire</option>
+                            <option value="route_esclaves">Route des Esclaves</option>
+                            <option value="foret_sacree">Forêt Sacrée de Kpasse</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="typeBillet">Type de billet *</label>
+                        <select id="typeBillet" required>
+                            <option value="">-- Choisir --</option>
+                            <option value="adulte_national">Adulte National (2 000 FCFA)</option>
+                            <option value="adulte_etranger">Adulte Étranger (5 000 FCFA)</option>
+                            <option value="enfant">Enfant (1 000 FCFA)</option>
+                            <option value="etudiant">Étudiant (1 500 FCFA)</option>
+                            <option value="groupe">Groupe par personne (1 500 FCFA)</option>
+                            <option value="vip">VIP (15 000 FCFA)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="nombreBillets">Nombre de billets *</label>
+                        <input type="number" id="nombreBillets" min="1" max="50" value="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="dateVisite">Date de visite *</label>
+                        <input type="date" id="dateVisite" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="guideOption">Guide assermenté</label>
+                        <select id="guideOption">
+                            <option value="non">Non</option>
+                            <option value="oui">Oui (+5 000 FCFA)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="nomGuide">Nom du Guide (optionnel)</label>
+                        <input type="text" id="nomGuide" placeholder="Ex: Guide Koffi">
+                    </div>
+
+                    <div class="price-summary">
+                        <h3>💰 Récapitulatif</h3>
+                        <div class="price-line"><span>Sous-total :</span><span id="sousTotal">0 FCFA</span></div>
+                        <div class="price-line"><span>Frais de service :</span><span id="fraisService">0 FCFA</span></div>
+                        <div class="price-line total"><span>Total :</span><span id="prixTotal">0 FCFA</span></div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-full">Procéder au paiement</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p><strong>OUIDAH CONNECT</strong> — Plateforme Officielle de Gestion Touristique</p>
+            <p>Ville de Ouidah, République du Bénin © 2026</p>
+        </div>
+    </footer>
+    <script src="js/app.js"></script>
+</body>
+</html>

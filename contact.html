@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - OUIDAH CONNECT</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="images/logo-ouidah.png" alt="Logo" class="nav-logo-img">
+                <span>OUIDAH CONNECT</span>
+            </a>
+            <button class="nav-toggle" id="navToggle">☰</button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link">Accueil</a></li>
+                <li><a href="sites.html" class="nav-link">Sites</a></li>
+                <li><a href="billetterie.html" class="nav-link">Billetterie</a></li>
+                <li><a href="boutique.html" class="nav-link">Boutique</a></li>
+                <li><a href="contact.html" class="nav-link active">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="page-header">
+        <video class="page-header-video" autoplay muted loop playsinline>
+            <source src="videos/hero-contact.mp4" type="video/mp4">
+        </video>
+        <div class="page-header-overlay"></div>
+        <h1>📍 Contact & Informations</h1>
+        <p>Nous sommes à votre disposition</p>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h2 style="color: var(--couleur-terre); margin-bottom: 20px;">📋 Informations Pratiques</h2>
+                    <div class="info-card">
+                        <h3>🕐 Horaires d'ouverture</h3>
+                        <p>Lundi - Dimanche : 8h00 - 18h00</p>
+                    </div>
+                    <div class="info-card">
+                        <h3>📞 Nous contacter</h3>
+                        <p>📱 +229 XX XX XX XX</p>
+                        <p>✉️ contact@ouidah-connect.bj</p>
+                    </div>
+                    <div class="info-card">
+                        <h3>📍 Adresse</h3>
+                        <p>Mairie de Ouidah, Ouidah, Atlantique, Bénin</p>
+                    </div>
+                </div>
+
+                <div class="contact-form-wrapper">
+                    <h2>✉️ Envoyez-nous un message</h2>
+                    <form class="contact-form">
+                        <div class="form-group">
+                            <label for="contactNom">Nom complet</label>
+                            <input type="text" id="contactNom" placeholder="Votre nom">
+                        </div>
+                        <div class="form-group">
+                            <label for="contactEmail">Email</label>
+                            <input type="email" id="contactEmail" placeholder="votre@email.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="contactSujet">Sujet</label>
+                            <select id="contactSujet">
+                                <option>Information générale</option>
+                                <option>Réservation de groupe</option>
+                                <option>Réclamation</option>
+                                <option>Partenariat</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="contactMessage">Message</label>
+                            <textarea id="contactMessage" rows="5" placeholder="Votre message..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-full">Envoyer le message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p><strong>OUIDAH CONNECT</strong> — Plateforme Officielle de Gestion Touristique</p>
+            <p>Ville de Ouidah, République du Bénin © 2026</p>
+        </div>
+    </footer>
+    <script src="js/app.js"></script>
+</body>
+</html>

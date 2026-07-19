@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sites Patrimoniaux - OUIDAH CONNECT</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="images/logo-ouidah.png" alt="Logo" class="nav-logo-img">
+                <span>OUIDAH CONNECT</span>
+            </a>
+            <button class="nav-toggle" id="navToggle">☰</button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link">Accueil</a></li>
+                <li><a href="sites.html" class="nav-link active">Sites</a></li>
+                <li><a href="billetterie.html" class="nav-link">Billetterie</a></li>
+                <li><a href="boutique.html" class="nav-link">Boutique</a></li>
+                <li><a href="contact.html" class="nav-link">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- EN-TÊTE AVEC VIDÉO SPÉCIFIQUE -->
+    <section class="page-header">
+        <video class="page-header-video" autoplay muted loop playsinline>
+            <source src="videos/hero-sites.mp4" type="video/mp4">
+        </video>
+        <div class="page-header-overlay"></div>
+        <h1>🏛️ Sites Patrimoniaux</h1>
+        <p>Découvrez les trésors historiques de Ouidah</p>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="sites-grid">
+                <article class="site-card">
+                    <div class="site-image">
+                        <img src="images/sites/temple-pythons.jpg" alt="Temple des Pythons">
+                        <span class="site-badge">Populaire</span>
+                    </div>
+                    <div class="site-info">
+                        <h3>Temple des Pythons</h3>
+                        <p>Lieu sacré dédié au culte du python royal, symbole de la spiritualité vodoun.</p>
+                        <div class="site-meta"><span>📍 Centre-ville</span><span>🕐 8h - 18h</span></div>
+                        <a href="billetterie.html" class="btn btn-primary btn-sm">Réserver un billet</a>
+                    </div>
+                </article>
+
+                <article class="site-card">
+                    <div class="site-image">
+                        <img src="images/sites/musee-histoire.jpg" alt="Musée d'Histoire">
+                    </div>
+                    <div class="site-info">
+                        <h3>Musée d'Histoire de Ouidah</h3>
+                        <p>Installé dans l'ancien fort portugais, ce musée retrace l'histoire de la région.</p>
+                        <div class="site-meta"><span>📍 Centre-ville</span><span>🕐 9h - 17h</span></div>
+                        <a href="billetterie.html" class="btn btn-primary btn-sm">Réserver un billet</a>
+                    </div>
+                </article>
+
+                <article class="site-card">
+                    <div class="site-image">
+                        <img src="images/sites/route-esclaves.jpg" alt="Route des Esclaves">
+                        <span class="site-badge">Incontournable</span>
+                    </div>
+                    <div class="site-info">
+                        <h3>Route des Esclaves</h3>
+                        <p>Parcours mémoriel de 4 km vers la Porte du Non-Retour. Un lieu de recueillement.</p>
+                        <div class="site-meta"><span>📍 Vers la plage</span><span>🕐 8h - 17h</span></div>
+                        <a href="billetterie.html" class="btn btn-primary btn-sm">Réserver un billet</a>
+                    </div>
+                </article>
+
+                <article class="site-card">
+                    <div class="site-image">
+                        <img src="images/sites/foret-sacree.jpg" alt="Forêt Sacrée de Kpasse">
+                    </div>
+                    <div class="site-info">
+                        <h3>Forêt Sacrée de Kpasse</h3>
+                        <p>Forêt mystique abritant des arbres centenaires et des divinités vodoun.</p>
+                        <div class="site-meta"><span>📍 Périphérie</span><span>🕐 8h - 16h</span></div>
+                        <a href="billetterie.html" class="btn btn-primary btn-sm">Réserver un billet</a>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p><strong>OUIDAH CONNECT</strong> — Plateforme Officielle de Gestion Touristique</p>
+            <p>Ville de Ouidah, République du Bénin © 2026</p>
+        </div>
+    </footer>
+    <script src="js/app.js"></script>
+</body>
+</html>

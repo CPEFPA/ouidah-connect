@@ -3,560 +3,106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="OUIDAH CONNECT - Plateforme SaaS de gestion numérique du patrimoine touristique de la Ville de Ouidah">
-    <meta name="theme-color" content="#A0522D">
-    
-    <title>OUIDAH CONNECT - Patrimoine Touristique</title>
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" href="images/favicon.png">
-    
-    <!-- PWA Manifest -->
-    <link rel="manifest" href="manifest.json">
-    
-    <!-- Styles CSS -->
+    <title>OUIDAH CONNECT - Accueil</title>
     <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="css/responsive.css">
-    
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
-    
-    <!-- ============================================ -->
-    <!-- BARRE DE NAVIGATION -->
-    <!-- ============================================ -->
-    <header class="header">
-        <div class="container">
-            <div class="header-content">
-                <!-- Logo -->
-                <div class="logo">
-                    <img src="images/logo-ouidah.png" alt="Logo Ouidah Connect" class="logo-img">
-                    <div class="logo-text">
-                        <h1>OUIDAH CONNECT</h1>
-                        <p class="logo-subtitle">Patrimoine Touristique</p>
-                    </div>
-                </div>
-                
-                <!-- Navigation principale -->
-                <nav class="nav-main" id="navMain">
-                    <ul class="nav-list">
-                        <li><a href="#accueil" class="nav-link active">Accueil</a></li>
-                        <li><a href="#sites" class="nav-link">Sites</a></li>
-                        <li><a href="#billetterie" class="nav-link">Billetterie</a></li>
-                        <li><a href="#evenements" class="nav-link">Événements</a></li>
-                        <li><a href="#boutique" class="nav-link">Boutique</a></li>
-                        <li><a href="#contact" class="nav-link">Contact</a></li>
-                    </ul>
-                </nav>
-                
-                <!-- Actions utilisateur -->
-                <div class="header-actions">
-                    <button class="btn btn-langue" id="btnLangue">
-                        <span>🌍</span> FR
-                    </button>
-                    <button class="btn btn-connexion" id="btnConnexion">
-                        Connexion
-                    </button>
-                    <button class="btn-menu-mobile" id="btnMenuMobile" aria-label="Menu">
-                        ☰
-                    </button>
-                </div>
+
+    <!-- NAVIGATION COMMUNE -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="images/logo-ouidah.png" alt="Logo Ouidah Connect" class="nav-logo-img">
+                <span>OUIDAH CONNECT</span>
+            </a>
+            <button class="nav-toggle" id="navToggle">☰</button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link active">Accueil</a></li>
+                <li><a href="sites.html" class="nav-link">Sites</a></li>
+                <li><a href="billetterie.html" class="nav-link">Billetterie</a></li>
+                <li><a href="boutique.html" class="nav-link">Boutique</a></li>
+                <li><a href="contact.html" class="nav-link">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION AVEC VIDÉO -->
+    <header class="hero">
+        <video class="hero-video" autoplay muted loop playsinline poster="images/sites/temple-pythons.jpg">
+            <source src="videos/hero-accueil.mp4" type="video/mp4">
+        </video>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">Bienvenue à Ouidah</h1>
+            <p class="hero-subtitle">Découvrez la richesse patrimoniale de la ville historique</p>
+            <div class="hero-buttons">
+                <a href="billetterie.html" class="btn btn-primary btn-lg">🎟️ Réserver un Billet</a>
+                <a href="sites.html" class="btn btn-outline btn-lg">🏛️ Découvrir les Sites</a>
             </div>
         </div>
     </header>
-    
-    <!-- ============================================ -->
-    <!-- HERO SECTION (Bannière principale) -->
-    <!-- ============================================ -->
-    <section class="hero" id="accueil">
-        <div class="hero-overlay"></div>
-        <div class="hero-content">
-            <h2 class="hero-title">Découvrez le Patrimoine de Ouidah</h2>
-            <p class="hero-subtitle">
-                Route des Esclaves • Temple des Pythons • Musée d'Histoire • Forêt Sacrée
-            </p>
-            <div class="hero-actions">
-                <button class="btn btn-primary btn-lg" id="btnReserver">
-                    Réserver une visite
-                </button>
-                <button class="btn btn-outline btn-lg" id="btnDecouvrir">
-                    Découvrir les sites
-                </button>
-            </div>
-            
-            <!-- Statistiques rapides -->
-            <div class="hero-stats">
-                <div class="stat-item">
-                    <span class="stat-number" id="statVisiteurs">1760</span>
-                    <span class="stat-label">Visiteurs ce mois</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-number" id="statSites">14</span>
-                    <span class="stat-label">Sites patrimoniaux</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-number" id="statGuides">32</span>
-                    <span class="stat-label">Guides assermentés</span>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <!-- ============================================ -->
-    <!-- SECTION SITES PATRIMONIAUX -->
-    <!-- ============================================ -->
-    <section class="section sites" id="sites">
+
+    <!-- PRÉSENTATION RAPIDE AVEC IMAGES -->
+    <section class="section">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">Nos Sites Patrimoniaux</h2>
-                <p class="section-subtitle">Explorez l'histoire et la culture de Ouidah</p>
+                <h2 class="section-title">Explorez Ouidah</h2>
+                <p class="section-subtitle">Une ville d'histoire, de culture et de spiritualité</p>
             </div>
             
-            <div class="sites-grid" id="sitesGrid">
-                <!-- Les sites seront injectés dynamiquement par JavaScript -->
-                <!-- Exemple de structure : -->
-                <article class="site-card" data-site-id="1">
-                    <div class="site-image">
+            <div class="home-grid">
+                <a href="sites.html" class="home-card">
+                    <div class="home-card-image">
                         <img src="images/sites/temple-pythons.jpg" alt="Temple des Pythons">
-                        <span class="site-badge">Populaire</span>
                     </div>
-                    <div class="site-content">
-                        <h3 class="site-name">Temple des Pythons</h3>
-                        <p class="site-description">
-                            Temple vaudou historique abritant des pythons sacrés, symbole de la spiritualité de Ouidah.
-                        </p>
-                        <div class="site-meta">
-                            <span class="site-price">À partir de 2 000 FCFA</span>
-                            <span class="site-duration">⏱ 1h30</span>
-                        </div>
-                        <button class="btn btn-primary btn-sm">Voir le site</button>
+                    <div class="home-card-content">
+                        <h3>4 Sites Patrimoniaux</h3>
+                        <p>Temple des Pythons, Musée, Route des Esclaves, Forêt Sacrée</p>
                     </div>
-                </article>
-                
-                <article class="site-card" data-site-id="2">
-                    <div class="site-image">
+                </a>
+
+                <a href="billetterie.html" class="home-card">
+                    <div class="home-card-image">
                         <img src="images/sites/musee-histoire.jpg" alt="Musée d'Histoire">
                     </div>
-                    <div class="site-content">
-                        <h3 class="site-name">Musée d'Histoire de Ouidah</h3>
-                        <p class="site-description">
-                            Ancienne Maison des Enchères, témoignage poignant de l'histoire de la traite.
-                        </p>
-                        <div class="site-meta">
-                            <span class="site-price">À partir de 3 000 FCFA</span>
-                            <span class="site-duration">⏱ 2h</span>
-                        </div>
-                        <button class="btn btn-primary btn-sm">Voir le site</button>
+                    <div class="home-card-content">
+                        <h3>Billetterie en Ligne</h3>
+                        <p>Réservez vos billets en quelques clics, recevez-les par email ou WhatsApp</p>
                     </div>
-                </article>
-                
-                <article class="site-card" data-site-id="3">
-                    <div class="site-image">
-                        <img src="images/sites/route-esclaves.jpg" alt="Route des Esclaves">
-                        <span class="site-badge">Incontournable</span>
-                    </div>
-                    <div class="site-content">
-                        <h3 class="site-name">Route des Esclaves</h3>
-                        <p class="site-description">
-                            Parcours mémoriel de 4 km jusqu'au Monument du Retour, sur les traces de l'histoire.
-                        </p>
-                        <div class="site-meta">
-                            <span class="site-price">À partir de 2 500 FCFA</span>
-                            <span class="site-duration">⏱ 3h</span>
-                        </div>
-                        <button class="btn btn-primary btn-sm">Voir le site</button>
-                    </div>
-                </article>
-                
-                <article class="site-card" data-site-id="4">
-                    <div class="site-image">
-                        <img src="images/sites/foret-sacree.jpg" alt="Forêt Sacrée de Kpasse">
-                    </div>
-                    <div class="site-content">
-                        <h3 class="site-name">Forêt Sacrée de Kpasse</h3>
-                        <p class="site-description">
-                            Sanctuaire naturel et spirituel, refuge de la biodiversité et des traditions vaudou.
-                        </p>
-                        <div class="site-meta">
-                            <span class="site-price">À partir de 1 500 FCFA</span>
-                            <span class="site-duration">⏱ 1h</span>
-                        </div>
-                        <button class="btn btn-primary btn-sm">Voir le site</button>
-                    </div>
-                </article>
-            </div>
-        </div>
-    </section>
-    
-    <!-- ============================================ -->
-    <!-- SECTION BILLETTERIE -->
-    <!-- ============================================ -->
-    <section class="section billetterie" id="billetterie">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Billetterie en Ligne</h2>
-                <p class="section-subtitle">Réservez vos billets en quelques clics</p>
-            </div>
-            
-            <div class="billetterie-form" id="billetterieForm">
-                <form id="formBillet">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="siteChoisi">Site à visiter</label>
-                            <select id="siteChoisi" name="siteChoisi" required>
-                                <option value="">-- Choisissez un site --</option>
-                                <option value="1">Temple des Pythons</option>
-                                <option value="2">Musée d'Histoire de Ouidah</option>
-                                <option value="3">Route des Esclaves</option>
-                                <option value="4">Forêt Sacrée de Kpasse</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="dateVisite">Date de visite</label>
-                            <input type="date" id="dateVisite" name="dateVisite" required>
-                        </div>
-                    </div>
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="typeBillet">Type de billet</label>
-                            <select id="typeBillet" name="typeBillet" required>
-                                <option value="">-- Choisissez un type --</option>
-                                <option value="adulte_etranger">Adulte Étranger</option>
-                                <option value="adulte_national">Adulte National</option>
-                                <option value="enfant">Enfant (6-12 ans)</option>
-                                <option value="etudiant">Étudiant</option>
-                                <option value="groupe">Groupe (10+ personnes)</option>
-                                <option value="scolaire">Scolaire</option>
-                                <option value="vip">VIP</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="nombreBillets">Nombre de billets</label>
-                            <input type="number" id="nombreBillets" name="nombreBillets" min="1" max="50" value="1" required>
-                        </div>
-                    </div>
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="guideOption">Guide touristique (optionnel)</label>
-                            <select id="guideOption" name="guideOption">
-                                <option value="non">Sans guide</option>
-                                <option value="oui">Avec guide (+5 000 FCFA)</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="creneau">Créneau horaire</label>
-                            <select id="creneau" name="creneau" required>
-                                <option value="">-- Choisissez un créneau --</option>
-                                <option value="09:00">09h00 - 10h30</option>
-                                <option value="10:30">10h30 - 12h00</option>
-                                <option value="14:00">14h00 - 15h30</option>
-                                <option value="15:30">15h30 - 17h00</option>
-                            </select>
-                        </div>
-                    </div>
+                </a>
 
-                    <!-- NOUVEAUX CHAMPS VISITEUR -->
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="nomVisiteur">Nom complet du visiteur *</label>
-                            <input type="text" id="nomVisiteur" name="nomVisiteur" placeholder="Ex: Jean Koffi" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="telVisiteur">Téléphone (ex: 22997000000) *</label>
-                            <input type="text" id="telVisiteur" name="telVisiteur" placeholder="229..." required>
-                        </div>
+                <a href="boutique.html" class="home-card">
+                    <div class="home-card-image">
+                        <img src="images/boutique/artisanat-1.jpg" alt="Artisanat local">
                     </div>
-                    <div class="form-group">
-                        <label for="emailVisiteur">Email (pour recevoir le billet PDF)</label>
-                        <input type="email" id="emailVisiteur" name="emailVisiteur" placeholder="votre@email.com">
+                    <div class="home-card-content">
+                        <h3>Boutique Souvenirs</h3>
+                        <p>Artisanat local, textiles traditionnels et livres d'histoire</p>
                     </div>
-                    <!-- FIN NOUVEAUX CHAMPS -->
-                    
-                    <!-- Résumé du prix -->
-                    <div class="prix-recap" id="prixRecap">
-                        <div class="prix-ligne">
-                            <span>Sous-total :</span>
-                            <span id="sousTotal">0 FCFA</span>
-                        </div>
-                        <div class="prix-ligne">
-                            <span>Frais de service :</span>
-                            <span id="fraisService">0 FCFA</span>
-                        </div>
-                        <div class="prix-ligne prix-total">
-                            <span>Total :</span>
-                            <span id="prixTotal">0 FCFA</span>
-                        </div>
+                </a>
+
+                <a href="contact.html" class="home-card">
+                    <div class="home-card-image">
+                        <img src="images/sites/foret-sacree.jpg" alt="Forêt Sacrée">
                     </div>
-                    
-                    <button type="submit" class="btn btn-primary btn-lg btn-block">
-                        Procéder au paiement
-                    </button>
-                </form>
+                    <div class="home-card-content">
+                        <h3>Infos Pratiques</h3>
+                        <p>Horaires, accès, guides assermentés et plan de la ville</p>
+                    </div>
+                </a>
             </div>
         </div>
     </section>
-    
-    <!-- ============================================ -->
-    <!-- SECTION ÉVÉNEMENTS -->
-    <!-- ============================================ -->
-    <section class="section evenements" id="evenements">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Événements à venir</h2>
-                <p class="section-subtitle">Festivals, concerts et commémorations</p>
-            </div>
-            
-            <div class="evenements-grid" id="evenementsGrid">
-                <article class="event-card">
-                    <div class="event-date">
-                        <span class="event-day">25</span>
-                        <span class="event-month">JUIL</span>
-                    </div>
-                    <div class="event-content">
-                        <h3>Festival Vaudou de Ouidah</h3>
-                        <p>Célébration annuelle des traditions vaudou avec spectacles, danses et cérémonies.</p>
-                        <button class="btn btn-sm btn-outline">En savoir plus</button>
-                    </div>
-                </article>
-                
-                <article class="event-card">
-                    <div class="event-date">
-                        <span class="event-day">10</span>
-                        <span class="event-month">AOÛT</span>
-                    </div>
-                    <div class="event-content">
-                        <h3>Journée du Patrimoine</h3>
-                        <p>Visites gratuites et ateliers culturels pour toute la famille.</p>
-                        <button class="btn btn-sm btn-outline">En savoir plus</button>
-                    </div>
-                </article>
-            </div>
-        </div>
-    </section>
-    
-    <!-- ============================================ -->
-<!-- SECTION BOUTIQUE -->
-<!-- ============================================ -->
-<section class="section boutique" id="boutique">
-    <div class="container">
-        <div class="section-header">
-            <h2 class="section-title">Boutique Touristique</h2>
-            <p class="section-subtitle">Emportez un souvenir de Ouidah</p>
-        </div>
-        
-        <div class="boutique-grid" id="boutiqueGrid">
-            
-            <!-- ARTISANAT 1 -->
-            <article class="product-card">
-                <img src="images/boutique/artisanat-1.jpg" alt="Masque traditionnel" class="product-image">
-                <h3 class="product-name">Masque Traditionnel</h3>
-                <p class="product-price">15 000 FCFA</p>
-                <button class="btn btn-primary btn-sm">Ajouter au panier</button>
-            </article>
-            
-            <!-- ARTISANAT 2 -->
-            <article class="product-card">
-                <img src="images/boutique/artisanat-2.jpg" alt="Sculpture sur bois" class="product-image">
-                <h3 class="product-name">Sculpture sur Bois</h3>
-                <p class="product-price">20 000 FCFA</p>
-                <button class="btn btn-primary btn-sm">Ajouter au panier</button>
-            </article>
-            
-            <!-- TEXTILE 1 -->
-            <article class="product-card">
-                <img src="images/boutique/textile-1.jpg" alt="Tissu wax Ouidah" class="product-image">
-                <h3 class="product-name">Tissu Wax Ouidah</h3>
-                <p class="product-price">12 000 FCFA</p>
-                <button class="btn btn-primary btn-sm">Ajouter au panier</button>
-            </article>
-            
-            <!-- TEXTILE 2 -->
-            <article class="product-card">
-                <img src="images/boutique/textile-2.jpg" alt="Pagne traditionnel" class="product-image">
-                <h3 class="product-name">Pagne Traditionnel</h3>
-                <p class="product-price">18 000 FCFA</p>
-                <button class="btn btn-primary btn-sm">Ajouter au panier</button>
-            </article>
-            
-            <!-- LIVRE 1 -->
-            <article class="product-card">
-                <img src="images/boutique/livre-1.jpg" alt="Histoire de Ouidah" class="product-image">
-                <h3 class="product-name">Histoire de Ouidah</h3>
-                <p class="product-price">8 000 FCFA</p>
-                <button class="btn btn-primary btn-sm">Ajouter au panier</button>
-            </article>
-            
-            <!-- LIVRE 2 -->
-            <article class="product-card">
-                <img src="images/boutique/livre-2.jpg" alt="Guide touristique" class="product-image">
-                <h3 class="product-name">Guide Touristique</h3>
-                <p class="product-price">6 000 FCFA</p>
-                <button class="btn btn-primary btn-sm">Ajouter au panier</button>
-            </article>
-            
-        </div>
-    </div>
-</section>
-    
-    <!-- ============================================ -->
-    <!-- SECTION CONTACT -->
-    <!-- ============================================ -->
-    <section class="section contact" id="contact">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Contact</h2>
-                <p class="section-subtitle">Une question ? Nous sommes là pour vous aider</p>
-            </div>
-            
-            <div class="contact-grid">
-                <div class="contact-info">
-                    <div class="contact-item">
-                        <span class="contact-icon">📍</span>
-                        <div>
-                            <h4>Adresse</h4>
-                            <p>Mairie de Ouidah<br>Place Chacha, Ouidah, Bénin</p>
-                        </div>
-                    </div>
-                    
-                    <div class="contact-item">
-                        <span class="contact-icon">📞</span>
-                        <div>
-                            <h4>Téléphone</h4>
-                            <p>+229 95 50 65 12</p>
-                        </div>
-                    </div>
-                    
-                    <div class="contact-item">
-                        <span class="contact-icon">✉️</span>
-                        <div>
-                            <h4>Email</h4>
-                            <p>contact@ouidah-connect.bj</p>
-                        </div>
-                    </div>
-                    
-                    <div class="contact-item">
-                        <span class="contact-icon">🕐</span>
-                        <div>
-                            <h4>Horaires</h4>
-                            <p>Lundi - Dimanche : 08h00 - 18h00</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <form class="contact-form" id="contactForm">
-                    <div class="form-group">
-                        <label for="contactNom">Nom complet</label>
-                        <input type="text" id="contactNom" name="contactNom" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="contactEmail">Email</label>
-                        <input type="email" id="contactEmail" name="contactEmail" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="contactMessage">Message</label>
-                        <textarea id="contactMessage" name="contactMessage" rows="5" required></textarea>
-                    </div>
-                    
-                    <button type="submit" class="btn btn-primary">Envoyer le message</button>
-                </form>
-            </div>
-        </div>
-    </section>
-    
-    <!-- ============================================ -->
-    <!-- FOOTER -->
-    <!-- ============================================ -->
+
+    <!-- FOOTER COMMUN -->
     <footer class="footer">
         <div class="container">
-            <div class="footer-grid">
-                <div class="footer-col">
-                    <h4>OUIDAH CONNECT</h4>
-                    <p>Plateforme officielle de gestion numérique du patrimoine touristique de la Ville de Ouidah.</p>
-                    <div class="footer-social">
-                        <a href="#" aria-label="Facebook">📘</a>
-                        <a href="#" aria-label="Instagram">📷</a>
-                        <a href="#" aria-label="Twitter">🐦</a>
-                    </div>
-                </div>
-                
-                <div class="footer-col">
-                    <h4>Liens rapides</h4>
-                    <ul>
-                        <li><a href="#sites">Nos sites</a></li>
-                        <li><a href="#billetterie">Billetterie</a></li>
-                        <li><a href="#evenements">Événements</a></li>
-                        <li><a href="#boutique">Boutique</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-col">
-                    <h4>Informations</h4>
-                    <ul>
-                        <li><a href="#">Mentions légales</a></li>
-                        <li><a href="#">Politique de confidentialité</a></li>
-                        <li><a href="#">Conditions générales</a></li>
-                        <li><a href="#">FAQ</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-col">
-                    <h4>Newsletter</h4>
-                    <p>Recevez nos actualités et offres spéciales</p>
-                    <form class="newsletter-form" id="newsletterForm">
-                        <input type="email" placeholder="Votre email" required>
-                        <button type="submit" class="btn btn-primary">S'abonner</button>
-                    </form>
-                </div>
-            </div>
-            
-            <div class="footer-bottom">
-                <p>&copy; 2026 Ville de Ouidah - OUIDAH CONNECT. Tous droits réservés.</p>
-                <p>Développé dans le cadre du Partenariat Public-Privé (PPP)</p>
-            </div>
+            <p><strong>OUIDAH CONNECT</strong> — Plateforme Officielle de Gestion Touristique</p>
+            <p>Ville de Ouidah, République du Bénin © 2026</p>
         </div>
     </footer>
-    
-    <!-- ============================================ -->
-    <!-- MODAL DE CONNEXION -->
-    <!-- ============================================ -->
-    <div class="modal" id="modalConnexion">
-        <div class="modal-content">
-            <button class="modal-close" id="modalClose">&times;</button>
-            <h3>Connexion à OUIDAH CONNECT</h3>
-            <form id="formConnexion">
-                <div class="form-group">
-                    <label for="loginEmail">Email</label>
-                    <input type="email" id="loginEmail" required>
-                </div>
-                <div class="form-group">
-                    <label for="loginPassword">Mot de passe</label>
-                    <input type="password" id="loginPassword" required>
-                </div>
-                <button type="submit" class="btn btn-primary btn-block">Se connecter</button>
-                <p class="form-footer">
-                    <a href="#">Mot de passe oublié ?</a>
-                </p>
-            </form>
-        </div>
-    </div>
-    
-    <!-- ============================================ -->
-    <!-- SCRIPTS JAVASCRIPT -->
-    <!-- ============================================ -->
+
     <script src="js/app.js"></script>
-    <script src="js/modules/billetterie.js"></script>
-    <script src="js/modules/sites.js"></script>
-    <script src="js/modules/paiement.js"></script>
-    
 </body>
 </html>
