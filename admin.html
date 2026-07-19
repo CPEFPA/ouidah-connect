@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administration - OUIDAH CONNECT</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        .admin-container { max-width: 600px; margin: 40px auto; padding: 30px; background: white; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .admin-container h2 { color: #A0522D; margin-bottom: 20px; text-align: center; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 5px; font-weight: 600; color: #333; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; }
+        .btn-generate { width: 100%; padding: 12px; background: #2E7D32; color: white; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; margin-top: 10px; }
+        .btn-generate:hover { background: #1B5E20; }
+        .result-box { margin-top: 20px; padding: 15px; background: #E8F5E9; border-radius: 6px; display: none; }
+        .result-box a { color: #2E7D32; font-weight: 700; word-break: break-all; }
+        #loginScreen { text-align: center; padding: 50px 20px; }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="images/logo-ouidah.png" alt="Logo" class="nav-logo-img">
+                <span>OUIDAH CONNECT - ADMIN</span>
+            </a>
+            <a href="index.html" class="btn btn-outline btn-sm">← Retour au site</a>
+        </div>
+    </nav>
+
+    <!-- ÉCRAN DE CONNEXION SIMPLE -->
+    <div id="loginScreen" class="admin-container">
+        <h2>🔒 Accès Réservé</h2>
+        <div class="form-group">
+            <input type="password" id="adminPassword" placeholder="Mot de passe administrateur">
+        </div>
+        <button class="btn-generate" onclick="verifierPassword()">Se connecter</button>
+        <p id="loginError" style="color: red; margin-top: 10px; display: none;">Mot de passe incorrect</p>
+    </div>
+
+    <!-- INTERFACE D'ADMINISTRATION (Cachée par défaut) -->
+    <div id="adminPanel" class="admin-container" style="display: none;">
+        <h2>📄 Générateur de Documents</h2>
+        
+        <div class="form-group">
+            <label for="docType">Type de document</label>
+            <select id="docType" onchange="afficherChamps()">
+                <option value="facture">Facture (Entreprise/Agence)</option>
+                <option value="laissezPasser">Laissez-passer (Groupe)</option>
+                <option value="badgeGuide">Badge Guide Touristique</option>
+                <option value="badgeAgent">Badge Agent de Contrôle</option>
+            </select>
+        </div>
+
+        <!-- CHAMPS DYNAMIQUES -->
+        <div id="dynamicFields"></div>
+
+        <button class="btn-generate" onclick="genererDocument()">🖨️ Générer le document PDF</button>
+
+        <div id="resultBox" class="result-box">
+            <p>✅ Document généré avec succès !</p>
+            <a id="pdfLink" href="#" target="_blank">📥 Cliquer ici pour télécharger le PDF</a>
+        </div>
+    </div>
+
+    <script>
+        // MOT DE PASSE SIMPLE (À changer si besoin)
+        const ADMIN_PASSWORD = "ouidah2026";
+
+        function verifierPassword() {
+            const pwd = document.getElementById('adminPassword').value;
+            if (pwd === ADMIN_PASSWORD) {
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('adminPanel').style.display = 'block';
+                afficherChamps();
+            } else {
+                document.getElementById('loginError').style.display = 'block';
+            }
+        }
+
+        function afficherChamps() {
+            const type = document.getElementById('docType').value;
+            const container = document.getElementById('dynamicFields');
+            let html = '';
+
+            if (type === 'facture') {
+                html = `
+                    <div class="form-group"><label>N° Facture</label><input type="text" id="numFacture" value="FAC-${Date.now().toString().slice(-6)}"></div>
+                    <div class="form-group"><label>Date</label><input type="date" id="date" value="${new Date().toISOString().split('T')[0]}"></div>
+                    <div class="form-group"><label>Nom du Client</label><input type="text" id="nomClient" placeholder="Ex: Agence Voyage Bénin"></div>
+                    <div class="form-group"><label>Adresse</label><input type="text" id="adresseClient" placeholder="Ex: Cotonou, Bénin"></div>
+                    <div class="form-group"><label>Détails (Lignes)</label><textarea id="lignesFacture" rows="3" placeholder="Ex: 10x Billet Adulte Temple des Pythons"></textarea></div>
+                    <div class="form-group"><label>Montant Total (FCFA)</label><input type="number" id="montant" placeholder="Ex: 50000"></div>
+                `;
+            } else if (type === 'laissezPasser') {
+                html = `
+                    <div class="form-group"><label>Site concerné</label><input type="text" id="nomSite" placeholder="Ex: Temple des Pythons"></div>
+                    <div class="form-group"><label>Nom du Groupe / Agence</label><input type="text" id="nomGroupe" placeholder="Ex: École Primaire Les Étoiles"></div>
+                    <div class="form-group"><label>Nombre de personnes</label><input type="number" id="nbPersonnes" placeholder="Ex: 25"></div>
+                    <div class="form-group"><label>Nom du Guide attitré</label><input type="text" id="nomGuide" placeholder="Ex: Guide Koffi"></div>
+                `;
+            } else if (type === 'badgeGuide' || type === 'badgeAgent') {
+                const isGuide = type === 'badgeGuide';
+                html = `
+                    <div class="form-group"><label>Nom et Prénom</label><input type="text" id="nomPrenom" placeholder="Ex: Jean Koffi"></div>
+                    <div class="form-group"><label>Matricule</label><input type="text" id="matricule" value="${(isGuide ? 'GD-' : 'AG-') + Date.now().toString().slice(-4)}"></div>
+                    ${isGuide ? '<div class="form-group"><label>Langues parlées</label><input type="text" id="langues" placeholder="Ex: Français, Anglais, Fon"></div>' : '<div class="form-group"><label>Rôle / Fonction</label><input type="text" id="role" placeholder="Ex: Contrôleur d\'accès"></div>'}
+                    <div class="form-group"><label>Date d'expiration</label><input type="date" id="dateExpiration" value="2026-12-31"></div>
+                    <div class="form-group"><label>URL de la photo (optionnel)</label><input type="text" id="urlPhoto" placeholder="Lien vers l'image ou laisser vide"></div>
+                `;
+            }
+            container.innerHTML = html;
+            document.getElementById('resultBox').style.display = 'none';
+        }
+
+        async function genererDocument() {
+            const type = document.getElementById('docType').value;
+            const btn = document.querySelector('.btn-generate');
+            btn.textContent = '⏳ Génération en cours...';
+            btn.disabled = true;
+
+            // Récupération des données selon le type
+            let data = { type: type };
+            if (type === 'facture') {
+                data.numFacture = document.getElementById('numFacture').value;
+                data.date = document.getElementById('date').value;
+                data.nomClient = document.getElementById('nomClient').value;
+                data.adresseClient = document.getElementById('adresseClient').value;
+                data.lignesFacture = document.getElementById('lignesFacture').value;
+                data.montant = document.getElementById('montant').value;
+            } else if (type === 'laissezPasser') {
+                data.nomSite = document.getElementById('nomSite').value;
+                data.nomGroupe = document.getElementById('nomGroupe').value;
+                data.nbPersonnes = document.getElementById('nbPersonnes').value;
+                data.nomGuide = document.getElementById('nomGuide').value;
+            } else {
+                data.nomPrenom = document.getElementById('nomPrenom').value;
+                data.matricule = document.getElementById('matricule').value;
+                data.dateExpiration = document.getElementById('dateExpiration').value;
+                data.urlPhoto = document.getElementById('urlPhoto').value;
+                if (type === 'badgeGuide') data.langues = document.getElementById('langues').value;
+                if (type === 'badgeAgent') data.role = document.getElementById('role').value;
+            }
+
+            // Appel au script Google (nous allons créer un endpoint doGet pour ça)
+            // Pour simplifier, nous allons utiliser un Web App URL dédié ou passer par un fetch POST avec action
+            const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxi5Y2_6g-8R6nKp3WzwWkxZyatiT0_A8gC1P3593jFZfgWjJI3evTSGCqfHNX9loZ7/exec';
+            
+            // Nous devons modifier légèrement le doPost pour gérer l'action 'generer_special'
+            data.action = 'generer_special';
+
+            try {
+                const response = await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    body: JSON.stringify(data)
+                });
+                const result = await response.json();
+                
+                if (result.status === 'success') {
+                    document.getElementById('pdfLink').href = result.pdfUrl;
+                    document.getElementById('resultBox').style.display = 'block';
+                } else {
+                    alert('❌ Erreur : ' + result.message);
+                }
+            } catch (error) {
+                alert('❌ Erreur de connexion');
+            } finally {
+                btn.textContent = '🖨️ Générer le document PDF';
+                btn.disabled = false;
+            }
+        }
+    </script>
+</body>
+</html>
