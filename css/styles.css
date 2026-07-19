@@ -164,13 +164,13 @@ img {
 }
 
 /* ========================================== */
-/* HERO SECTION AVEC VIDÉO (GRAND FORMAT)     */
+/* HERO SECTION AVEC VIDÉO (MODE SOMBRE)      */
 /* ========================================== */
 .hero {
   position: relative;
-  background: var(--couleur-blanc);
+  background: #000;
   overflow: hidden;
-  min-height: 85vh; /* Prend 85% de la hauteur de l'écran */
+  min-height: 85vh;
   height: 85vh;
   display: flex;
   align-items: center;
@@ -186,38 +186,47 @@ img {
   height: 100%;
   transform: translate(-50%, -50%);
   z-index: 0;
-  object-fit: cover; /* Force la vidéo à couvrir tout l'espace sans déformation */
+  object-fit: cover;
 }
 
+/* OVERLAY SOMBRE pour effet cinématographique */
 .hero-overlay {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(255, 255, 255, 0.75);
+  background: linear-gradient(
+    135deg, 
+    rgba(0, 0, 0, 0.75) 0%, 
+    rgba(160, 82, 45, 0.55) 50%, 
+    rgba(0, 0, 0, 0.75) 100%
+  );
   z-index: 1;
 }
 
+/* Contenu texte en BLANC pour contraster */
 .hero-content {
   position: relative;
   z-index: 2;
   max-width: 800px;
   text-align: center;
-  color: var(--couleur-noir);
+  color: var(--couleur-blanc);
 }
 
 .hero-title {
   font-family: 'Playfair Display', serif;
-  font-size: 3.5rem; /* Titre un peu plus grand */
+  font-size: 3.5rem;
   margin-bottom: 15px;
-  color: var(--couleur-terre);
+  color: var(--couleur-blanc);
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
 }
 
 .hero-subtitle {
   font-size: 1.3rem;
   margin-bottom: 30px;
-  color: var(--couleur-texte);
+  color: rgba(255, 255, 255, 0.95);
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.6);
 }
 
 .hero-buttons {
@@ -225,6 +234,34 @@ img {
   gap: 15px;
   justify-content: center;
   flex-wrap: wrap;
+}
+
+/* Bouton outline adapté au fond sombre */
+.hero .btn-outline {
+  background: transparent;
+  border: 2px solid var(--couleur-blanc);
+  color: var(--couleur-blanc);
+}
+
+.hero .btn-outline:hover {
+  background: var(--couleur-blanc);
+  color: var(--couleur-terre);
+}
+
+/* RESPONSIVE HERO SOMBRE */
+@media (max-width: 768px) {
+  .hero {
+    min-height: 60vh;
+    padding: 40px 15px;
+  }
+  
+  .hero-title {
+    font-size: 2rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 1rem;
+  }
 }
 
 /* ========================================== */
