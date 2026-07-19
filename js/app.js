@@ -7,16 +7,26 @@ document.addEventListener('DOMContentLoaded', () => {
     
     console.log('✅ OUIDAH CONNECT Frontend initialisé avec succès');
 
+        // ==========================================
+    // 1. GESTION DU MENU MOBILE (Version corrigée)
     // ==========================================
-    // 1. GESTION DU MENU MOBILE
-    // ==========================================
-    const btnMenuMobile = document.getElementById('btnMenuMobile');
-    const navMain = document.getElementById('navMain');
+    const btnMenuMobile = document.getElementById('navToggle');
+    const navMain = document.getElementById('navMenu');
 
     if (btnMenuMobile && navMain) {
         btnMenuMobile.addEventListener('click', () => {
             navMain.classList.toggle('active');
+            // Change l'icône hamburger en croix
             btnMenuMobile.textContent = navMain.classList.contains('active') ? '✕' : '☰';
+        });
+        
+        // Fermer le menu quand on clique sur un lien (sur mobile)
+        const navLinks = navMain.querySelectorAll('.nav-link');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                navMain.classList.remove('active');
+                btnMenuMobile.textContent = '☰';
+            });
         });
     }
 
